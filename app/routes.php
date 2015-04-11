@@ -23,7 +23,9 @@ Route::get('posts/{id}'     , ['as' => 'posts.show'   , 'uses' => 'PostsControll
 Route::post('comments'      , ['as' => 'comments.store'  , 'uses' => 'CommentsController@store']);
 
 Route::get('login'         , ['as' => 'auth.login' , 'uses' => 'AuthController@index']);
+Route::get('registration'  , ['as' => 'auth.registration' , 'uses' => 'AuthController@registration']);
 Route::post('login/process', ['as' => 'auth.process' , 'uses' => 'AuthController@process']);
+Route::post('login/userCreate', ['as' => 'auth.userCreate' , 'uses' => 'AuthController@userCreate']);
 Route::get('logout'        , ['as' => 'auth.logout' , 'uses' => 'AuthController@logout']);
 
 Route::group(array('before' => 'auth'), function()
@@ -34,7 +36,7 @@ Route::group(array('before' => 'auth'), function()
     Route::get('categories/{id}/edit', ['as' => 'categories.edit'   , 'uses' => 'CategoriesController@edit']);
     Route::patch('categories/{id}'   , ['as' => 'categories.update' , 'uses' => 'CategoriesController@update']);
     Route::delete('categories/{id}'  , ['as' => 'categories.destroy', 'uses' => 'CategoriesController@destroy']);
-    
+
     Route::get('posts/create'   , ['as' => 'posts.create' , 'uses' => 'PostsController@create']);
     Route::post('posts'         , ['as' => 'posts.store'  , 'uses' => 'PostsController@store']);
     Route::get('posts/{id}/edit', ['as' => 'posts.edit'   , 'uses' => 'PostsController@edit']);
