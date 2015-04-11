@@ -48,10 +48,8 @@ class AuthController extends \BaseController {
 
 	public function userCreate()
 	{
-			  $inputs = Input::all();
-
-        // $validation = Validator::make($inputs, Post::$rules);
-         $validator = Validator::make(Input::all(), User::$rules);
+			  $inputs 		= Input::all();
+        $validator 	= Validator::make(Input::all(), User::$rules);
 
 				if ($validator->passes()) {
 				    $user = new User;
@@ -59,6 +57,9 @@ class AuthController extends \BaseController {
 				    $user->email    = Input::get('email');
 				    $user->password = Hash::make(Input::get('password'));
 				    $user->save();
+
+				    // Auto login
+				    Auth::attempt(['username' => Input::get('username'), 'password' => Input::get('password')]);
 
 						return Redirect::route('home.index')->with('success', 'Thanks for registering');
 				} else {
