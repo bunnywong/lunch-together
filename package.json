@@ -1,0 +1,39 @@
+{
+  "name": "gruntRocks",
+  "version": "0.0.1",
+  "description": "Using Grunt with Laravel and Bootstrap",
+  "main": "Gruntfile.js",
+  "dependencies": {
+    "bower": "^1.4.1",
+    "grunt-cli": "^0.1.13"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-concat": "^0.5.1",
+    "grunt-contrib-less": "^1.0.1",
+    "grunt-contrib-uglify": "^0.9.1",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-phpunit": "^0.3.6"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bunnywong/lunch-together.git"
+  },
+  "keywords": [
+    "lunch",
+    "system",
+    "Laravel",
+    "Grunt",
+    "Bootstrap",
+    "LESS"
+  ],
+  "author": "BunnY",
+  "license": "BSD",
+  "bugs": {
+    "url": "https://github.com/bunnywong/lunch-together/issues"
+  },
+  "homepage": "https://github.com/bunnywong/lunch-together"
+}

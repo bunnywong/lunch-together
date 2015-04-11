@@ -8,11 +8,13 @@
     <meta name="author" content="">
     <title>
         @section('title')
-        | 偽 Blog
+        | Lunch Together :P
         @show
     </title>
-    {{ HTML::style('css/bootstrap.min.css') }}
-    {{ HTML::style('css/style.css') }}
+    {{ HTML::style('css/frontend.css') }}
+    {{ HTML::style('css/frontend.css') }}
+
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -33,13 +35,13 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="{{ route('home.index') }}">偽 Blog</a>
+                <a class="navbar-brand" href="{{ route('home.index') }}">Lunch Together</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="{{ route('about.index') }}">關於本站</a>
+                        <a href="{{ route('about.index') }}">How to use</a>
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">分類文章 <span class="caret"></span></a>
@@ -73,7 +75,7 @@
         <footer>
             <div class="row">
                 <div class="col-lg-12">
-                    <p>Copyright &copy; 偽 Blog</p>
+                    <p>Copyright &copy; BunnY</p>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
