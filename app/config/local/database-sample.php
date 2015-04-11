@@ -26,7 +26,7 @@ return array(
       'port'      => 3306,
 			'database'  => 'blog_local',
 			'username'  => 'root',
-			'password'  => 'bunny',
+			'password'  => 'root',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
