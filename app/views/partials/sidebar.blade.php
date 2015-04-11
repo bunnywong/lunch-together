@@ -25,7 +25,7 @@
                     <li><a href="{{ route('categories.show', $category->id) }}">{{{ $category->name }}}</a></li>
                     @endforeach
                 </ul>
-                
+
                 @if (Auth::check())
                 <div>
                     <p><a href="{{ route('categories.index') }}">管理分類</a></p>
@@ -38,11 +38,12 @@
 
     <!-- Side Widget Well -->
     <div class="well">
-        <h4>網站管理</h4>
+        <h4>Account</h4>
         @if (Auth::check())
-        <p><span class="label label-success">管理中</span> <a href="{{ route('auth.logout') }}">登出</a></p>
+        <p><span class="label label-success">Member</span> <a href="{{ route('auth.logout') }}">Logout</a></p>
         @else
-        <p><a href="{{ route('auth.login') }}">登入</a></p>
+        <p><a href="{{ route('auth.login') }}">Login</a></p>
+        <p><a href="{{ route('auth.registration') }}">Registration</a></p>
         @endif
     </div>
 

@@ -1,10 +1,66 @@
+/*
+	Table of content
+
+	=import library & var
+	=login
+	=Front end
+*/
+
+/* =import library & var
+-------------------------------------------------- */
 @import 'base.less';
-//styles specific for the frontend
-// ...
+
+/* =Front end
+-------------------------------------------------- */
 body {
     padding-top: 70px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
 }
 
 footer {
     margin: 50px 0;
+}
+
+/* =login
+-------------------------------------------------- */
+body.login {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background-color: #eee;
+	.form-signin {
+	  max-width: 330px;
+	  padding: 15px;
+	  margin: 0 auto;
+	}
+	.form-signin {
+		.form-signin-heading, .checkbox {
+	  	margin-bottom: 10px;
+	  }
+	  .checkbox {
+		  font-weight: normal;
+		}
+		.form-control {
+		  position: relative;
+		  height: auto;
+		  -webkit-box-sizing: border-box;
+		     -moz-box-sizing: border-box;
+		          box-sizing: border-box;
+		  padding: 10px;
+		  font-size: 16px;
+		}
+		.form-control:focus {
+		  z-index: 2;
+		}
+		input[type="email"] {
+		  margin-bottom: 10px;
+		  border-bottom-right-radius: 0;
+		  border-bottom-left-radius: 0;
+		}
+		input[type="password"] {
+		  border-top-left-radius: 0;
+		  border-top-right-radius: 0;
+		}
+		input[type="submit"] {
+			margin-top: 50px;
+		}
+	}
 }
