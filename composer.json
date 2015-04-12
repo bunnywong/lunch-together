@@ -1,7 +1,7 @@
 {
-    "name": "shengyou/blog-example",
-    "description": "This is a laravel blog example project",
-    "keywords": ["framework", "laravel", "blog"],
+    "name": "bunnywong/lunch-together",
+    "description": "This is a lunch $$ handle project",
+    "keywords": ["lunch", "laravel"],
     "license": "proprietary",
 	"require": {
 		"laravel/framework": "4.2.*"
@@ -9,7 +9,8 @@
     "require-dev": {
         "way/generators": "2.*",
         "barryvdh/laravel-ide-helper": "v1.10.0",
-        "fzaninotto/faker": "v1.4.0"
+        "fzaninotto/faker": "v1.4.0",
+        "phpunit/phpunit": "4.6.4"
     },
 	"autoload": {
 		"classmap": [

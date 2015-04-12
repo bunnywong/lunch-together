@@ -16,8 +16,12 @@ class CreatePostsTable extends Migration {
         {
             $table->increments('id');
             $table->string('title');
-            $table->text('content');
-            $table->integer('category_id')->unsigned()->index();
+            $table->text('content'); // remark
+            $table->timestamp('event_date');
+            $table->integer('category_id')->unsigned()->index(); // restaurant_id
+            $table->integer('payer_id');
+            $table->integer('comsumer_id');
+            $table->float('cost');
             $table->timestamps();
         });
 	}

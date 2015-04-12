@@ -5,9 +5,9 @@ class CategoryTableSeeder extends Seeder {
 	public function run()
 	{
         DB::table('categories')->truncate();
-        
-        $names = ['生活記事', '心情寫真', '學習成果', '雜項'];
-        
+
+        $names = ['Restaurant X', 'Restaurant A', 'Restaurant B'];
+
         foreach($names as $index => $name)
         {
             Category::create([
