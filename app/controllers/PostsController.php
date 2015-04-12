@@ -27,9 +27,9 @@ class PostsController extends \BaseController {
 	public function create()
 	{
         $categories = Category::all();
-        
-        $data = compact('categories');
-        
+        $users = User::all();
+        $data = compact('categories', 'users');
+
 		return View::make('posts.create', $data);
 	}
 
@@ -52,7 +52,7 @@ class PostsController extends \BaseController {
 
         Post::create($inputs);
 
-		return Redirect::route('home.index')->with('success', 'Added new payment');
+		return Redirect::route('home.index')->with('success', 'Added new transaction');
 	}
 
 	/**
@@ -70,10 +70,9 @@ class PostsController extends \BaseController {
 				// $last_query = end($queries);
 				// echo dd($last_query);
 
-
         if (is_null($post))
         {
-            return Redirect::route('home.index')->with('error', 'Payment no found');
+            return Redirect::route('home.index')->with('error', 'Transaction no found');
         }
 
         $categories = Category::all();
@@ -81,7 +80,7 @@ class PostsController extends \BaseController {
 
         $data = compact('post', 'categories', 'users');
 
-		return View::make('posts.show', $data); // ***
+		return View::make('posts.show', $data);
 	}
 
 	/**
@@ -130,7 +129,7 @@ class PostsController extends \BaseController {
 
         $post->update(Input::all());
 
-        return Redirect::route('home.index')->with('success', 'Payment updated');
+        return Redirect::route('home.index')->with('success', 'Transaction updated');
 	}
 
 	/**
@@ -144,7 +143,7 @@ class PostsController extends \BaseController {
 	{
 		Post::destroy($id);
 
-		return Redirect::route('home.index')->with('success', 'Payment delete');
+		return Redirect::route('home.index')->with('success', 'Transaction delete');
 	}
 
 }

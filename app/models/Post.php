@@ -3,19 +3,19 @@
 class Post extends \Eloquent {
     protected $table = 'posts';
     protected $fillable = [
-        'title',
         'content',
         'category_id',
         'event_date',
+        'payer_id',
         'consumer_id',
         'cost',
     ];
 
     public static $rules = [
-        'title' => 'required',
         'content' => 'required',
         'category_id' => 'required|exists:categories,id',
         'event_date' => 'required',
+        'payer_id' => 'required',
         'consumer_id' => 'required',
         'cost' => 'required|numeric',
     ];

@@ -15,7 +15,6 @@ class CreatePostsTable extends Migration {
 		Schema::create('posts', function(Blueprint $table)
         {
             $table->increments('id');
-            $table->string('title');
             $table->text('content'); // remark
             $table->timestamp('event_date');
             $table->integer('category_id')->unsigned()->index(); // restaurant_id

@@ -8,7 +8,7 @@ Lunch Together  @parent
 <!-- Blog Entries Column -->
 <div class="col-md-8">
 
-    <h1 class="page-header">Latest Transaction</h1>
+    <h1 class="page-header">Transaction Feeder</h1>
 
     @include('partials.notifications')
 
@@ -20,13 +20,13 @@ Lunch Together  @parent
 
     @foreach($posts as $post)
     <h2>
-        <a href="{{ route('posts.show', $post->id) }}">{{{ $post->title }}}</a>
+        <a href="{{ route('posts.show', $post->id) }}">{{{ $post->category->name }}}</a>
     </h2>
     <p class="text-right">
-        <span>{{{ $post->category->name }}}</span>
+        <span class="glyphicon glyphicon-time"></span>
         {{{ $post->created_at->toDateTimeString() }}}
     </p>
-    <p>{{{ $post->content }}}</p>
+    <p>${{{ $post->cost }}} - {{{ $post->content }}}</p>
 
     <div class="text-right">
         <a class="btn btn-info" href="{{ route('posts.show', $post->id) }}">Detail</a>

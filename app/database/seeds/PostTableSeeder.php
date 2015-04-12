@@ -14,8 +14,7 @@ class PostTableSeeder extends Seeder {
         /* Scenario #1.1 Payment
         -------------------------------------------------- */
         Post::create([
-                'title'       => 'Scenario #1.1 Payment',
-                'content'     => 'Alice AA payemnt',
+                'content'     => 'Scenario #1.1 Payment - Alice AA payemnt',
                 'event_date' => \Carbon\Carbon::now()->addDays(0),
                 'category_id' => 1,
                 'payer_id' => 2,
@@ -25,8 +24,7 @@ class PostTableSeeder extends Seeder {
                 'updated_at'  => \Carbon\Carbon::now()->addDays(0),
             ]);
         Post::create([
-                'title'       => 'Scenario #1.1 Payment',
-                'content'     => 'Bob AA payemnt',
+                'content'     => 'Scenario #1.1 Payment - Bob AA payemnt',
                 'event_date' => \Carbon\Carbon::now()->addDays(0),
                 'category_id' => 1,
                 'payer_id' => 3,
@@ -36,8 +34,7 @@ class PostTableSeeder extends Seeder {
                 'updated_at'  => \Carbon\Carbon::now()->addDays(0),
             ]);
         Post::create([
-                'title'       => 'Scenario #1.1 Payment',
-                'content'     => 'Charlie AA payemnt',
+                'content'     => 'Scenario #1.1 Payment - Charlie AA payemnt',
                 'event_date' => \Carbon\Carbon::now()->addDays(0),
                 'category_id' => 1,
                 'payer_id' => 1,
@@ -49,8 +46,7 @@ class PostTableSeeder extends Seeder {
         /* Scenario #1.2 Payment
         -------------------------------------------------- */
         Post::create([
-                'title'       => 'Scenario #1.2 Payment',
-                'content'     => 'Charlie pay for himself',
+                'content'     => 'Scenario #1.2 Payment - Charlie pay for himself',
                 'event_date' => \Carbon\Carbon::now()->addDays(0),
                 'category_id' => 1,
                 'payer_id' => 1,
@@ -60,8 +56,7 @@ class PostTableSeeder extends Seeder {
                 'updated_at'  => \Carbon\Carbon::now()->addDays(0),
             ]);
         Post::create([
-                'title'       => 'Scenario #1.2 Payment',
-                'content'     => 'Charlie pay for Bob',
+                'content'     => 'Scenario #1.2 Payment - Charlie pay for Bob',
                 'event_date' => \Carbon\Carbon::now()->addDays(0),
                 'category_id' => 1,
                 'payer_id' => 1,
@@ -71,8 +66,7 @@ class PostTableSeeder extends Seeder {
                 'updated_at'  => \Carbon\Carbon::now()->addDays(0),
             ]);
         Post::create([
-                'title'       => 'Scenario #1.2 Payment',
-                'content'     => 'Charlie pay for Alice',
+                'content'     => 'Scenario #1.2 Payment - Charlie pay for Alice',
                 'event_date' => \Carbon\Carbon::now()->addDays(0),
                 'category_id' => 1,
                 'payer_id' => 1,

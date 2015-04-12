@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-建立新文章 @parent
+New Transaction @parent
 @stop
 
 @section('content')
@@ -9,38 +9,57 @@
 <div class="col-lg-8">
 
     <!-- Blog Post -->
-    <h1>建立新文章</h1>
-    
+    <h1>New Transaction</h1>
+
     @include('partials.notifications')
-    
+
     {{ Form::open(['route' => 'posts.store', 'method' => 'POST', 'class' => 'horizontal-form', 'role' => 'form']) }}
-    
-    <!-- Title -->
-    <div class="form-group{{ $errors->first('title', ' has-error') }}">
-        {{ Form::label('title', '標題： ') }}
-        {{ Form::text('title', null, ['class' => 'form-control', 'placeholder' => '請輸入文章標題', 'required']) }}
-    </div>
-    
-    <!-- Post Content -->
-    <div class="form-group{{ $errors->first('content', ' has-error') }}">
-        {{ Form::label('content', '文章內容： ') }}
-        {{ Form::textarea('content', null, ['class' => 'form-control', 'placeholder' => '請輸入文章內容', 'required']) }}
-    </div>
-    
-    <!-- Post Category -->
+
+     <!-- Restaurant -->
     <div class="form-group{{ $errors->first('category_id', ' has-error') }}">
-        {{ Form::label('category_id', '文章分類： ') }}
+        {{ Form::label('category_id', 'Restaurant: ') }}
+        <a href="{{ route('categories.create') }}" class="">Create New</a>
         {{ Form::select('category_id', $categories->lists('name', 'id'), null, ['class' => 'form-control']) }}
     </div>
-    
+
+    <!-- Event Date -->
+    <div class="form-group{{ $errors->first('event_date', ' has-error') }}">
+        {{ Form::label('event_date', 'Event Date: ') }}
+        {{ Form::text('event_date', null, ['class' => 'form-control', 'placeholder' => 'Please input event_date', 'required', 'id' => 'datetimepicker']) }}
+    </div>
+
+    <!-- Payer -->
+    <div class="form-group{{ $errors->first('consumer_id', ' has-error') }}">
+            {{ Form::label('payer_id', 'Payer: ') }}
+            {{ Form::select('payer_id', $users->lists('username', 'id'), null, ['class' => 'form-control']) }}
+    </div>
+
+    <!-- Consumer -->
+    <div class="form-group{{ $errors->first('consumer_id', ' has-error') }}">
+        {{ Form::label('consumer_id', 'Consumer: ') }}
+         {{ Form::select('consumer_id', $users->lists('username', 'id'), null, ['class' => 'form-control']) }}
+    </div>
+
+    <!-- Cost -->
+    <div class="form-group{{ $errors->first('cost', ' has-error') }}">
+        {{ Form::label('cost', 'Cost: ') }}
+        {{ Form::text('cost', null, ['class' => 'form-control', 'placeholder' => 'Please input cost', 'required', 'type' => 'number']) }}
+    </div>
+
+    <!-- Remark -->
+    <div class="form-group{{ $errors->first('content', ' has-error') }}">
+        {{ Form::label('content', 'Remark: ') }}
+        {{ Form::textarea('content', null, ['class' => 'form-control', 'placeholder' => 'Please input remark', 'required']) }}
+    </div>
+
     <!-- Button -->
     <div class="form-group text-right">
-        <a href="{{ route('posts.index') }}" class="btn btn-link"> &#171; 返回</a>
-        {{ Form::submit('發表', ['class' => 'btn btn-success']) }}
+        <a href="{{ route('posts.index') }}" class="btn btn-link"> &#171; Back</a>
+        {{ Form::submit('Go', ['class' => 'btn btn-success']) }}
     </div>
 
     {{ Form::close() }}
-    
+
 </div>
 
 @include('partials.sidebar')
