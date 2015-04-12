@@ -70,9 +70,15 @@ class CategoriesController extends \BaseController {
 	{
         $posts = Post::where('category_id', $id)->orderBy('created_at', 'desc')->paginate(5);
         $categories = Category::all();
-        
-        $data = compact('posts', 'categories');
-        
+
+        if(isset(Auth::user()->id)) {
+					$payments = DB::table('posts')->join('users', 'posts.payer_id', '=', 'users.id')->select('username', DB::raw('sum(cost) AS total'))->where('consumer_id', '=', Auth::user()->id)->where('payer_id', '<>', Auth::user()->id)->groupBy('username')->get();
+				} else {
+					$payments = '';
+				}
+
+        $data = compact('posts', 'categories', 'payments');
+
 		return View::make('categories.show', $data);
 	}
 

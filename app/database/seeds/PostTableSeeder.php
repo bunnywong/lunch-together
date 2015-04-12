@@ -76,10 +76,48 @@ class PostTableSeeder extends Seeder {
                 'updated_at'  => \Carbon\Carbon::now()->addDays(0),
             ]);
 
-        /* Scenario #1.? Payment
+        /* Scenario #1.3 Payment
         -------------------------------------------------- */
-
-
+        Post::create([
+                'content'     => 'Scenario #1.3 Payment - David pay for Charlie',
+                'event_date' => \Carbon\Carbon::now()->addDays(0),
+                'category_id' => 2,
+                'payer_id' => 4,
+                'consumer_id' => 1,
+                'cost' => 50,
+                'created_at'  => \Carbon\Carbon::now()->addDays(-1),
+                'updated_at'  => \Carbon\Carbon::now()->addDays(0),
+            ]);
+        Post::create([
+                'content'     => 'Scenario #1.3 Payment - Charlie pay for Alice',
+                'event_date' => \Carbon\Carbon::now()->addDays(0),
+                'category_id' => 2,
+                'payer_id' => 1,
+                'consumer_id' => 2,
+                'cost' => 60,
+                'created_at'  => \Carbon\Carbon::now()->addDays(-1),
+                'updated_at'  => \Carbon\Carbon::now()->addDays(0),
+            ]);
+        Post::create([
+                'content'     => 'Scenario #1.3 Payment - Charlie pay for Bob',
+                'event_date' => \Carbon\Carbon::now()->addDays(0),
+                'category_id' => 2,
+                'payer_id' => 1,
+                'consumer_id' => 2,
+                'cost' => 80,
+                'created_at'  => \Carbon\Carbon::now()->addDays(-1),
+                'updated_at'  => \Carbon\Carbon::now()->addDays(0),
+            ]);
+       /* Post::create([
+                'content'     => 'fake',
+                'event_date' => \Carbon\Carbon::now()->addDays(0),
+                'category_id' => 2,
+                'payer_id' => 2,
+                'consumer_id' => 1,
+                'cost' => 80,
+                'created_at'  => \Carbon\Carbon::now()->addDays(-1),
+                'updated_at'  => \Carbon\Carbon::now()->addDays(0),
+            ]);*/
 	}
 
 }

@@ -44,7 +44,19 @@
         @if (Auth::check())
 
         <p>
-            <div>Welcome  {{{ isset(Auth::user()->username) ? Auth::user()->username : Auth::user()->email }}}</div>
+            @if(isset($payments))
+                @if (count($payments) > 0)
+                   <div>{{{Auth::user()->username}}} has to pay</div>
+                @endif
+
+
+                <ul>
+                @foreach ($payments as $payment)
+                    <li>{{ $payment->username }} $ {{ $payment->total }}</li>
+                @endforeach
+                </ul>
+            @endif
+
             <span class="label label-success">Member</span>
             <a href="{{ route('auth.logout') }}">Logout</a>
         </p>
