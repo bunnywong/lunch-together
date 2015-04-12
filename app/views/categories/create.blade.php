@@ -17,18 +17,18 @@ New Restaurant @parent
 
     <!-- Name -->
     <div class="form-group{{ $errors->first('name', ' has-error') }}">
-        {{ Form::label('name', '分類名稱：') }}
-        {{ Form::text('name', null, ['class' => 'form-control', 'placeholder' => '請輸入文章標題', 'required']) }}
+        {{ Form::label('name', 'Restaurant Name') }}
+        {{ Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Pelase input restaurant name', 'required']) }}
     </div>
 
     <!-- Buttons -->
     <div class="form-group text-right">
-        <a href="{{ route('categories.index') }}" class="btn btn-link"> &#171; 返回</a>
-        {{ Form::submit('新增', ['class' => 'btn btn-success']) }}
+        <a href="{{ route('categories.index') }}" class="btn btn-link"> &#171; Back</a>
+        {{ Form::submit('New', ['class' => 'btn btn-success']) }}
     </div>
 
     {{ Form::close() }}
-    
+
 </div>
 
 @include('partials.sidebar')
