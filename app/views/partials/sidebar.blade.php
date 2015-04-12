@@ -17,7 +17,7 @@
 
     <!-- Blog Categories Well -->
     <div class="well">
-        <h4>文章分類</h4>
+        <h4>Restaurant</h4>
         <div class="row">
             <div class="col-lg-6">
                 <ul class="list-unstyled">
@@ -28,7 +28,9 @@
 
                 @if (Auth::check())
                 <div>
-                    <p><a href="{{ route('categories.index') }}">管理分類</a></p>
+                    <p>
+                        <a class="btn btn-primary" href="{{ route('categories.index') }}">Restaurant Manage</a>
+                    </p>
                 </div>
                 @endif
             </div>
@@ -40,7 +42,12 @@
     <div class="well">
         <h4>Account</h4>
         @if (Auth::check())
-        <p><span class="label label-success">Member</span> <a href="{{ route('auth.logout') }}">Logout</a></p>
+
+        <p>
+            <div>Welcome  {{{ isset(Auth::user()->username) ? Auth::user()->username : Auth::user()->email }}}</div>
+            <span class="label label-success">Member</span>
+            <a href="{{ route('auth.logout') }}">Logout</a>
+        </p>
         @else
         <p><a href="{{ route('auth.login') }}">Login</a></p>
         <p><a href="{{ route('auth.registration') }}">Registration</a></p>
