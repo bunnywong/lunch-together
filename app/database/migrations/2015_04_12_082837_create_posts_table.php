@@ -20,7 +20,7 @@ class CreatePostsTable extends Migration {
             $table->timestamp('event_date');
             $table->integer('category_id')->unsigned()->index(); // restaurant_id
             $table->integer('payer_id');
-            $table->integer('comsumer_id');
+            $table->integer('consumer_id');
             $table->float('cost');
             $table->timestamps();
         });

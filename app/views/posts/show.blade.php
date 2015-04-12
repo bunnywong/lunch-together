@@ -7,49 +7,71 @@
 @section('content')
 <!-- Blog Post Content Column -->
 <div class="col-lg-8">
-
     <!-- Blog Post -->
-    
+
     @if (Auth::check())
     <div class="text-right">
-        <a class="btn btn-success" href="{{ route('posts.create') }}">新增文章</a>
+        <a class="btn btn-success" href="{{ route('posts.create') }}">New Payment</a>
     </div>
     @endif
-    
+
     <!-- Title -->
-    <h1>{{{ $post->title }}}</h1>
-    
+    <h1> {{{ $post->title or $post->event_date }}} </h1>
+
     <!-- Category/Date/Time -->
     <p class="text-right">
-        <span>{{{ $post->category->name }}}</span>
-        <span class="glyphicon glyphicon-time"></span> 發表於 {{{ $post->created_at->toDateTimeString() }}}
+        <span class="glyphicon glyphicon-time"></span>{{{ $post->created_at->toDateTimeString() }}}
     </p>
 
-    <hr>
-
     <!-- Post Content -->
-    <p>{{{ $post->content }}}</p>
+    <table class="table table-condensed">
+        <tr>
+            <th>Event date</th>
+            <td> {{ Str::limit($post->event_date, 10, '') }} </td>
+        </tr>
+        <tr>
+            <th>Restaurant</th>
+            <td>{{{ $post->category->name }}}</td>
+        </tr>
+        <tr>
+            <th>Payer</th>
+            <td>{{{ $post->payer->username }}}</td>
+        </tr>
+        <tr>
+            <th>Consumer</td>
+            <td>{{{ $post->consumer->username }}}</td>
+        </tr>
+        <tr>
+            <th>Cost</th>
+            <td>${{ round($post->cost, 2) }}</td>
+        </tr>
+        <tr>
+            <th>Remark</th>
+            <td>{{{ $post->content }}}</td>
+        </tr>
+    </table>
 
     @if (Auth::check())
     <div class="text-right">
-        <a class="btn btn-primary" href="{{ route('posts.edit', $post->id) }}">編輯</a>
-        
+        <a class="btn btn-primary" href="{{ route('posts.edit', $post->id) }}">Edit</a>
+
         {{ Form::open(['url' => 'posts/'.$post->id, 'method' => 'DELETE', 'style' => 'display: inline;', 'role' => 'form']) }}
-        {{ Form::submit('刪除', ['class' => 'btn btn-danger btn-sm']) }}
+        {{ Form::submit('Delet', ['class' => 'btn btn-danger btn-sm pull-left']) }}
         {{ Form::close() }}
     </div>
     @endif
-    
+
     <hr>
 
     <!-- Blog Comments -->
 
     <!-- Comments Form -->
+    <!--
     <div class="well">
         <h4>回覆文章</h4>
-        
+
         @include('partials.notifications')
-        
+
         {{ Form::open(['route' => 'comments.store', 'method' => 'POST', 'class' => 'horizontal-form', 'role' => 'form']) }}
             <div class="form-group{{ $errors->first('name', ' has-error')}}">
                 {{ Form::label('name', '您的名字：') }}
@@ -69,12 +91,12 @@
             </div>
         {{ Form::close() }}
     </div>
-
-    <hr>
+    -->
 
     <!-- Posted Comments -->
 
     <!-- Comments -->
+    <!--
     @foreach($post->comments as $comment)
     <div class="media">
         <div class="media-body">
@@ -85,6 +107,7 @@
         </div>
     </div>
     @endforeach
+    -->
 
 </div>
 
