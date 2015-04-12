@@ -47,6 +47,8 @@ module.exports = function(grunt) {
         src: [
           '<%= paths.assets.vendor %>jquery/dist/jquery.js',
           '<%= paths.assets.vendor %>bootstrap/dist/js/bootstrap.js',
+          '<%= paths.assets.vendor %>moment/min/moment.min.js',
+          '<%= paths.assets.vendor %>eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js',
           '<%= paths.assets.js %>frontend.js'
         ],
         dest: '<%= paths.js %>frontend.js',
@@ -111,8 +113,10 @@ module.exports = function(grunt) {
         js_frontend: {
           files: [
             //watched files
-            '<%= paths.assets.vendor %>jquery/dist/jquery.js',
-            '<%= paths.assets.vendor %>bootstrap/dist/js/bootstrap.js',
+          //   '<%= paths.assets.vendor %>jquery/dist/jquery.js',
+          //   '<%= paths.assets.vendor %>bootstrap/dist/js/bootstrap.js',
+          //   '<%= paths.assets.vendor %>moment/min/moment.js',
+          // '<%= paths.assets.vendor %>eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.js',
             '<%= paths.assets.js %>frontend.js'
             ],
           tasks: ['concat:js_frontend','uglify:frontend'],     //tasks to run
