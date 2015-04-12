@@ -46,17 +46,17 @@ class CategoriesController extends \BaseController {
 	public function store()
 	{
         $inputs = Input::all();
-        
+
         $validation = Validator::make($inputs, Category::$rules);
-        
+
         if ($validation->fails())
         {
             return Redirect::back()->withErrors($validation)->withInput();
         }
-        
+
 		Category::create($inputs);
-        
-        return Redirect::route('categories.index')->with('success', '成功新增分類');
+
+        return Redirect::route('categories.index')->with('success', 'Restaurant Added');
 	}
 
 	/**
@@ -103,19 +103,19 @@ class CategoriesController extends \BaseController {
 	public function update($id)
 	{
         $category = Category::findOrFail($id);
-        
+
         $inputs = Input::all();
-        
+
         $validation = Validator::make($inputs, Category::$rules);
-        
+
         if ($validation->fails())
         {
             return Redirect::back()->withErrors($validation)->withInput();
         }
-		
+
         $category->update($inputs);
-        
-        return Redirect::route('categories.index')->with('success', '成功更新分類');
+
+        return Redirect::route('categories.index')->with('success', 'Restaurant Updated');
 	}
 
 	/**
@@ -129,16 +129,16 @@ class CategoriesController extends \BaseController {
 	{
         $category = Category::where('id', '!=', $id)->orderBy('id', 'desc')->first();
         $posts = Post::where('category_id', $id)->get();
-        
+
         foreach($posts as $post)
         {
             $post->category_id = $category->id;
             $post->save();
         }
-        
+
 		Category::destroy($id);
-        
-        return Redirect::route('categories.index')->with('success', '成功刪除分類');
+
+        return Redirect::route('categories.index')->with('success', 'Restaurant Deleted');
 	}
 
 }
