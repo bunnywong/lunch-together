@@ -26,13 +26,11 @@
                     @endforeach
                 </ul>
 
-                @if (Auth::check())
                 <div>
                     <p>
                         <a class="btn btn-primary" href="{{ route('categories.index') }}">Restaurant Manage</a>
                     </p>
                 </div>
-                @endif
             </div>
         </div>
     </div>
@@ -79,8 +77,45 @@
             <div class="well history">
                 <h4>Payment History</h4>
 
+@if(isset($history_s))
+<table class="table table-condensed">
+    <thead>
+        <tr>
+            <th>Venue</th>
+            <?php $i = 0; ?>
+            @foreach($history_s as $key)
+                @foreach($key as $k)
+                    <?php $i++; ?>
+                    @if($i <= $categories_count)
+                        <th>{{$k->username}}</th>
+                    @endif
+                @endforeach
+            @endforeach
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <?php $i = 0; ?>
+            @foreach($history_s as $key)
+                @foreach($key as $k)
 
-
+                    @if($i % $categories_count  == 0)
+                    <td><span class="">{{$k->restaurant}}</span></td>
+                    @endif
+        <?php $i++; ?>
+                    <td>
+                        <span class="hidden">{{$k->username}}</span>
+                        <span>${{$k->total}}</span>
+                        @if($i % $categories_count  == 0)
+                          </td></tr><tr>
+                        @endif
+                    </td>
+                @endforeach
+            @endforeach
+        </tr>
+    </tbody>
+</table>
+@endif
             </div>
             @endif
 

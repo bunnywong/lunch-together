@@ -57,33 +57,49 @@ class HomeController extends BaseController {
 						->select('username', DB::raw('sum(cost) AS total'))
 						->groupBy('username')->get();
 
-					// Payment History
-					$users =  DB::table('users')
-						->select('username')
-						->groupBy('id')->get();
 
+						// --------------------------------------------------
+						// Payment History (Dirty script)
 
-						// todo
-						$history_s = DB::table('posts')
-						->join('users', 'posts.consumer_id', '=', 'users.id')
-						->join('categories', 'posts.category_id', '=', 'categories.id')
-						->select(DB::raw('name AS restaurant'), 'username', 'cost')
-						// ->groupBy('name')
-						->get();
+						$users =  DB::table('users')
+							->select('id')
+							->get();
+						$categories_id =  DB::table('categories')
+							->select('id')
+							->get();
 
+						$categories_id= array_fetch($categories_id,'id');
+						$users_id= array_fetch($users,'id');
+						$categories_count = count($categories_id);
+						$users_count = count($users_id);
+
+						$history_s = array();
+
+						for($i=0; $i<$categories_count; $i++) {
+							for($j=0; $j<count($users_id); $j++) {
+								$history = DB::table('posts')
+								->join('users', 'posts.consumer_id', '=', 'users.id')
+								->join('categories', 'posts.category_id', '=', 'categories.id')
+								->select(DB::raw('name AS restaurant'), 'username', DB::raw('SUM(cost) AS total'))
+								->where('category_id', '=', $categories_id[$i])
+								->where('users.id', '=', $users_id[$j])
+								->groupBy('restaurant')
+								->orderBy('category_id')
+								->get();
+								$history_s[] = $history;
+							}
+						}
 
 				} else {
 					$payments = '';
 					$credits = '';
 					$balances = '';
 					$history_s = '';
+					$categories_count = '';
+					$users_count = '';
 				}
 
-						// echo '<pre>';
-						// dd($history_s);
-						// echo '</pre>';
-
-        $data = compact('posts', 'categories', 'payments', 'credits', 'balances', 'history_s');
+        $data = compact('posts', 'categories', 'payments', 'credits', 'balances', 'history_s', 'categories_count', 'users_count');
 
 		return View::make('home.index', $data);
 	}
