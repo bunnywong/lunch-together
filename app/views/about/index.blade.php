@@ -1,19 +1,19 @@
 @extends('layouts.master')
 
 @section('title')
-關於本站 @parent
+How to use @parent
 @stop
 
 @section('content')
 <!-- Blog Entries Column -->
 <div class="col-md-8">
 
-    <h1 class="page-header">
-        關於本站
-        <small>偽 Blog 的二三事…</small>
-    </h1>
+    <h1 class="page-header"> How to use</h1>
 
-    <p>這個 Blog 是一個使用 Laravel 做為開發框架的示範</p>
+    <ul>
+    	<li>Register</li>
+    	<li>Input transaction</li>
+    </ul>
 
 </div>
 
