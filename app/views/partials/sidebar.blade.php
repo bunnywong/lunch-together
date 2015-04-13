@@ -15,14 +15,14 @@
         <!-- /.input-group -->
     </div>--}}
 
-    <!-- Blog Categories Well -->
+    @if (Auth::check())
     <div class="well">
         <h4>Restaurant</h4>
         <div class="row">
             <div class="col-lg-6">
                 <ul class="list-unstyled">
                     @foreach($categories as $category)
-                    <li><a href="{{ route('categories.show', $category->id) }}">{{{ $category->name }}}</a></li>
+                    <li class="capitalize"><a href="{{ route('categories.show', $category->id) }}">{{{ $category->name }}}</a></li>
                     @endforeach
                 </ul>
 
@@ -35,36 +35,85 @@
                 @endif
             </div>
         </div>
-        <!-- /.row -->
     </div>
+    @endif
 
     <!-- Side Widget Well -->
+    @unless(Auth::check())
     <div class="well">
         <h4>Account</h4>
-        @if (Auth::check())
-
-        <p>
-            @if(isset($payments))
-                @if (count($payments) > 0)
-                   <div>{{{Auth::user()->username}}} has to pay</div>
-                @endif
-
-
-                <ul>
-                @foreach ($payments as $payment)
-                    <li>{{ $payment->username }} $ {{ $payment->total }}</li>
-                @endforeach
-                </ul>
-            @endif
-
-            <span class="label label-success">Member</span>
-            <a href="{{ route('auth.logout') }}">Logout</a>
-        </p>
-        @else
         <p><a href="{{ route('auth.login') }}">Login</a></p>
         <p><a href="{{ route('auth.registration') }}">Registration</a></p>
-        @endif
     </div>
+    @endunless
 
+    @if(Auth::check())
+        <div class="well">
+            <h4>Account</h4>
+            <p>
+                <span>Hi </span><span class="capitalize">{{ Auth::user()->username }}</span>
+            </p>
+             @if(Auth::user()->is_admin)
+                <span class="label label-default">Admin</span>
+            @endif
+            <span class="label label-success">Member</span>
+
+            <a href="{{ route('auth.logout') }}">Logout</a>
+        </div>
+
+        @if(Auth::user()->is_admin)
+
+            @if(isset($balances))
+            <div class="well balance">
+                <h4>Latest Balance</h4>
+                <ul>
+                @foreach ($balances as $balance)
+                    <li class="capitalize">{{ $balance->username }} $ {{ $balance->total }}</li>
+                @endforeach
+                </ul>
+            </div>
+            @endif
+
+
+            @if(isset($history_s))
+            <div class="well history">
+                <h4>Payment History</h4>
+
+
+
+            </div>
+            @endif
+
+        @endif {{-- !is_admin --}}
+
+
+        @if(isset($payments) && count($payments) > 0)
+        <div class="well">
+            <h4>My payment</h4>
+            <div>
+                <span>I have to pay</span>
+            </div>
+            <ul>
+            @foreach ($payments as $payment)
+                <li class="capitalize">{{ $payment->username }} $ {{ $payment->total }}</li>
+            @endforeach
+            </ul>
+        </div>
+        @endif
+
+
+        @if(isset($credits) && count($credits) > 0)
+        <div class="well">
+            <h4>Credit</h4>
+            <div>Co-worker have to pay me</div>
+            <ul>
+            @foreach ($credits as $credit)
+                <li class="capitalize">{{ $credit->username }} $ {{ $credit->total }}</li>
+            @endforeach
+            </ul>
+        </div>
+        @endif
+
+    @endif {{-- !if(user) --}}
 </div>
 

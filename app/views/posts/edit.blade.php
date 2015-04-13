@@ -8,8 +8,7 @@ Payment Update @parent
 <!-- Blog Post Content Column -->
 <div class="col-lg-8">
 
-    <!-- Blog Post -->
-    <h1>Transaction Update</h1>
+    <h1>Payment Update</h1>
 
     @include('partials.notifications')
 
@@ -29,10 +28,14 @@ Payment Update @parent
     </div>
 
     <!-- Payer -->
-    <div class="form-group{{ $errors->first('consumer_id', ' has-error') }}">
+    @if(Auth::user()->is_admin)
+        <div class="form-group{{ $errors->first('consumer_id', ' has-error') }}">
             {{ Form::label('payer_id', 'Payer: ') }}
             {{ Form::select('payer_id', $users->lists('username', 'id'), null, ['class' => 'form-control']) }}
-    </div>
+        </div>
+    @else
+        {{ Form::hidden('payer_id', Auth::user()->id) }}
+    @endif
 
     <!-- Consumer -->
     <div class="form-group{{ $errors->first('consumer_id', ' has-error') }}">

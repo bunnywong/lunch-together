@@ -53,11 +53,13 @@
 
     @if (Auth::check())
     <div class="text-right">
-        <a class="btn btn-primary" href="{{ route('posts.edit', $post->id) }}">Edit</a>
+        @if(Auth::user()->is_admin || $post->payer_id == Auth::user()->id)
+            <a class="btn btn-primary" href="{{ route('posts.edit', $post->id) }}">Edit</a>
 
-        {{ Form::open(['url' => 'posts/'.$post->id, 'method' => 'DELETE', 'style' => 'display: inline;', 'role' => 'form']) }}
-        {{ Form::submit('Delet', ['class' => 'btn btn-danger btn-sm pull-left']) }}
-        {{ Form::close() }}
+            {{ Form::open(['url' => 'posts/'.$post->id, 'method' => 'DELETE', 'style' => 'display: inline;', 'role' => 'form']) }}
+            {{ Form::submit('Delet', ['class' => 'btn btn-danger btn-sm pull-left']) }}
+            {{ Form::close() }}
+        @endif
     </div>
     @endif
 

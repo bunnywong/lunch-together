@@ -8,7 +8,7 @@ Lunch Together @parent
 <!-- Blog Entries Column -->
 <div class="col-md-8">
 
-    <h1 class="page-header">Restaurant Transaction</h1>
+    <h1 class="page-header">Restaurant Payment</h1>
 
     @if (Auth::check())
     <div class="text-right">
@@ -27,13 +27,19 @@ Lunch Together @parent
     <p>{{{ $post->content }}}</p>
 
     <div class="text-right">
-        <a class="btn btn-info" href="{{ route('posts.show', $post->id) }}">Detail</a>
-        @if (Auth::check())
-        <a class="btn btn-primary" href="{{ route('posts.edit', $post->id) }}">Edit</a>
-        {{ Form::open(['url' => 'posts/'.$post->id, 'method' => 'DELETE', 'style' => 'display: inline;', 'role' => 'form']) }}
-        {{ Form::submit('Delet', ['class' => 'btn btn-danger btn-sm pull-left']) }}
-        {{ Form::close() }}
+    @if (Auth::check())
+        @if(Auth::user()->is_admin || $post->payer_id == Auth::user()->id)
+            <a class="btn btn-primary" href="{{ route('posts.edit', $post->id) }}">Edit</a>
         @endif
+
+        <a class="btn btn-info" href="{{ route('posts.show', $post->id) }}">Detail</a>
+
+        @if(Auth::user()->is_admin || $post->payer_id == Auth::user()->id)
+            {{ Form::open(['url' => 'posts/'.$post->id, 'method' => 'DELETE', 'style' => 'display: inline;', 'role' => 'form']) }}
+            {{ Form::submit('Delet', ['class' => 'btn btn-danger btn-sm pull-left']) }}
+            {{ Form::close() }}
+        @endif
+    @endif
     </div>
 
     <hr>
