@@ -23,7 +23,7 @@ New Restaurant @parent
 
     <!-- Buttons -->
     <div class="form-group text-right">
-        <a href="{{ route('categories.index') }}" class="btn btn-link"> &#171; Back</a>
+        <a href="" class="btn btn-link" onclick="history.go(-1);"> &#171; Back</a>
         {{ Form::submit('New', ['class' => 'btn btn-success']) }}
     </div>
 
