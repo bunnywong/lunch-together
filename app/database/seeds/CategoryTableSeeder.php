@@ -6,7 +6,7 @@ class CategoryTableSeeder extends Seeder {
 	{
         DB::table('categories')->truncate();
 
-        $names = ['Restaurant X', 'Restaurant A', 'Restaurant B'];
+        $names = ['Restaurant X', 'Restaurant Y', 'Restaurant Z'];
 
         foreach($names as $index => $name)
         {
