@@ -52,7 +52,7 @@ class PostsController extends \BaseController {
 
         Post::create($inputs);
 
-		return Redirect::route('home.index')->with('success', 'Added new transaction');
+		return Redirect::route('home.index')->with('success', 'Added new payment');
 	}
 
 	/**
@@ -72,7 +72,7 @@ class PostsController extends \BaseController {
 
         if (is_null($post))
         {
-            return Redirect::route('home.index')->with('error', 'Transaction no found');
+            return Redirect::route('home.index')->with('error', 'Payment no found');
         }
 
         $categories = Category::all();
@@ -129,7 +129,7 @@ class PostsController extends \BaseController {
 
         $post->update(Input::all());
 
-        return Redirect::route('home.index')->with('success', 'Transaction updated');
+        return Redirect::route('home.index')->with('success', 'Payment updated');
 	}
 
 	/**
@@ -143,7 +143,7 @@ class PostsController extends \BaseController {
 	{
 		Post::destroy($id);
 
-		return Redirect::route('home.index')->with('success', 'Transaction delete');
+		return Redirect::route('home.index')->with('success', 'Payment delete');
 	}
 
 }

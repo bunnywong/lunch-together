@@ -1,15 +1,14 @@
 @extends('layouts.master')
 
 @section('title')
-New Transaction @parent
+New Payment @parent
 @stop
 
 @section('content')
 <!-- Blog Post Content Column -->
 <div class="col-lg-8">
 
-    <!-- Blog Post -->
-    <h1>New Transaction</h1>
+    <h1>New Payment</h1>
 
     @include('partials.notifications')
 
