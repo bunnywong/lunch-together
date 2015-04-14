@@ -65,9 +65,19 @@
             <div class="well balance">
                 <h4>Latest Balance</h4>
                 <ul>
-                @foreach ($balances as $balance)
-                    <li class="capitalize">{{ $balance->username }} $ {{ $balance->total }}</li>
-                @endforeach
+                    @foreach ($balances as $balance)
+                        @foreach ($balance as $val)
+                            <li class="capitalize">
+                                {{$val->username}}
+
+                                @if($val->debet > $val->credit)
+                                    - ${{$val->debet}}
+                                @else
+                                    {{$val->credit}}
+                                @endif
+                            </li>
+                        @endforeach
+                    @endforeach
                 </ul>
             </div>
             @endif
