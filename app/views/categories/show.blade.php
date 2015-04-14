@@ -18,7 +18,6 @@ Lunch Together @parent
 
     @foreach($posts as $post)
     <h2>
-        <a href="{{ route('posts.show', $post->id) }}">{{{ $post->title }}}</a>
     </h2>
     <p class="text-right">
         <span class="glyphicon glyphicon-time"></span> {{{ $post->created_at->toDateTimeString() }}}

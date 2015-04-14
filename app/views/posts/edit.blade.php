@@ -9,6 +9,7 @@ Payment Update @parent
 <div class="col-lg-8">
 
     <h1>Payment Update</h1>
+    <hr>
 
     @include('partials.notifications')
 

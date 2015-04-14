@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-文章詳細頁 @parent
+Payment Detail @parent
 @stop
 
 @section('content')
@@ -16,7 +16,7 @@
     @endif
 
     <!-- Title -->
-    <h1> {{{ $post->title or $post->event_date }}} </h1>
+    <h1>Payment Detail</h1>
 
     <!-- Category/Date/Time -->
     <p class="text-right">
