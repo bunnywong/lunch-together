@@ -33,63 +33,74 @@ class HomeController extends BaseController {
         $categories = Category::all();
 
 	      if(isset(Auth::user()->id)) {
-	      	$my_user_id = Auth::user()->id;
+		      	$my_user_id = Auth::user()->id;
 
-	      	// This Consume(user) have to pay payer
-					$payments = DB::table('posts')
-						->join('users', 'posts.payer_id', '=', 'users.id')
-						->select('username', DB::raw('sum(cost) AS total'))
-						->where('consumer_id', '=', $my_user_id)
-						->where('payer_id', '<>', $my_user_id)
-						->groupBy('username')->get();
+		      	// This Consume(user) have to pay payer
+						$payments = DB::table('posts')
+							->join('users', 'posts.payer_id', '=', 'users.id')
+							->select('username', DB::raw('sum(cost) AS total'))
+							->where('consumer_id', '=', $my_user_id)
+							->where('payer_id', '<>', $my_user_id)
+							->groupBy('username')->get();
 
-					// Other consumer to pay this payer(user)
-						$credits = DB::table('posts')
-						->join('users', 'posts.consumer_id', '=', 'users.id')
-						->select('username', DB::raw('sum(cost) AS total'))
-						->where('consumer_id', '<>', $my_user_id)
-						->where('payer_id', '=', $my_user_id)
-						->groupBy('username')->get();
+						// Other consumer to pay this payer(user)
+							$credits = DB::table('posts')
+							->join('users', 'posts.consumer_id', '=', 'users.id')
+							->select('username', DB::raw('sum(cost) AS total'))
+							->where('consumer_id', '<>', $my_user_id)
+							->where('payer_id', '=', $my_user_id)
+							->groupBy('username')->get();
 
-					// Payment Balance
-						$balances = DB::table('posts')
-						->join('users', 'posts.consumer_id', '=', 'users.id')
-						->select('username', DB::raw('sum(cost) AS total'))
-						->groupBy('username')->get();
+						// Payment Balance
+							$balances = DB::table('posts')
+							->join('users', 'posts.consumer_id', '=', 'users.id')
+							->select('username', DB::raw('sum(cost) AS total'))
+							->groupBy('username')->get();
 
+							// Payment History
+							function users($cid) {
+									// Show transaction user
+									$users =  DB::table('users')
+										->join('posts', 'users.id', '=', 'posts.consumer_id')
+										->select('users.id', 'users.username')
+										->get();
 
-						// --------------------------------------------------
-						// Payment History (Dirty script)
+										$length = count($users);
+										$tail = 0;
+										$str = '';
 
-						$users =  DB::table('users')
-							->select('id')
-							->get();
-						$categories_id =  DB::table('categories')
-							->select('id')
-							->get();
+										foreach($users as $key=>$val) {
+												$tail++;
+												$uid =  $val->id;
+												$username =  $val->username;
+												$str .= ' (SELECT SUM(cost) FROM posts';
+												$str .= ' WHERE posts.category_id='.$cid;
+												$str .= ' AND posts.consumer_id= '.$val->id.')';
+												$str .= ' AS '.$val->username;
+												$str .= $tail == $length ? '' : ',';
+										}
+										return $str;
+								}
 
-						$categories_id= array_fetch($categories_id,'id');
-						$users_id= array_fetch($users,'id');
-						$categories_count = count($categories_id);
-						$users_count = count($users_id);
+								$history_s = array();
+								$cat =  DB::table('categories')
+									->select('id')->get();
+									$i = 0;
+								foreach($cat as $key=>$val) {
+									$cid = $val->id;
 
-						$history_s = array();
-
-						for($i=0; $i<$categories_count; $i++) {
-							for($j=0; $j<count($users_id); $j++) {
-								$history = DB::table('posts')
-								->join('users', 'posts.consumer_id', '=', 'users.id')
-								->join('categories', 'posts.category_id', '=', 'categories.id')
-								->select(DB::raw('name AS restaurant'), 'username', DB::raw('SUM(cost) AS total'))
-								->where('category_id', '=', $categories_id[$i])
-								->where('users.id', '=', $users_id[$j])
-								->groupBy('restaurant')
-								->orderBy('category_id')
-								->get();
-								$history_s[] = $history;
-							}
-						}
-
+									$history = DB::table('posts')
+											->join('users', 'posts.consumer_id', '=', 'users.id')
+											->join('categories', 'posts.category_id', '=', 'categories.id')
+											->select(
+													DB::raw(' categories.name AS restaurant '),
+													DB::raw(users($cid))
+												)
+											->where('category_id', '=', $cid)
+											->groupBy('restaurant')
+											->get();
+									$history_s[$i][] = $history;
+								}
 				} else {
 					$payments = '';
 					$credits = '';

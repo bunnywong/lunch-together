@@ -72,50 +72,48 @@
             </div>
             @endif
 
-
             @if(isset($history_s))
             <div class="well history">
                 <h4>Payment History</h4>
 
-@if(isset($history_s))
-<table class="table table-condensed">
-    <thead>
-        <tr>
-            <th>Venue</th>
-            <?php $i = 0; ?>
-            @foreach($history_s as $key)
-                @foreach($key as $k)
-                    <?php $i++; ?>
-                    @if($i <= $categories_count)
-                        <th>{{$k->username}}</th>
-                    @endif
-                @endforeach
-            @endforeach
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <?php $i = 0; ?>
-            @foreach($history_s as $key)
-                @foreach($key as $k)
-
-                    @if($i % $categories_count  == 0)
-                    <td><span class="">{{$k->restaurant}}</span></td>
-                    @endif
-        <?php $i++; ?>
-                    <td>
-                        <span class="hidden">{{$k->username}}</span>
-                        <span>${{$k->total}}</span>
-                        @if($i % $categories_count  == 0)
-                          </td></tr><tr>
-                        @endif
-                    </td>
-                @endforeach
-            @endforeach
-        </tr>
-    </tbody>
-</table>
-@endif
+                <div class="table-wrapper">
+                <table class="table table-condensed history">
+                    <thead>
+                        <tr>
+                            <th>Venue</th>
+                            <?php
+                                $thead = $history_s;
+                                $thead = $history_s[0][0];
+                            ?>
+                            @foreach($thead as $key=>$val)
+                                @foreach($val as $k=>$v)
+                                    <th>{{($k)}}</th>
+                                @endforeach
+                            @endforeach
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            @foreach($history_s as $key=>$val)
+                                @foreach($val as $k=>$v)
+                                    @foreach($v as $k2=>$v2)
+                                    <tr>
+                                        @foreach($v2 as $k3=>$v3)
+                                            <td>
+                                                @if(isset($v3))
+                                                <span class="sign">$</span>
+                                                @endif
+                                                <span class="content">{{$v3}}</span>
+                                            </td>
+                                        @endforeach
+                                    </tr>
+                                    @endforeach
+                                @endforeach
+                            @endforeach
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
             </div>
             @endif
 

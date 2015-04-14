@@ -21,6 +21,25 @@
 -------------------------------------------------- */
 body {
     padding-top: 70px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+
+		// Sidebar
+		.table-wrapper {
+			// overflow-x: scroll;
+	    table.history {
+	    	th:nth-child(2) { // [restaurant]
+					display: none;
+	    	}
+			  tr {
+			    td {
+			    	&:first-child {
+			    		span.sign {
+								display: none;
+			    		}
+			    	}
+			    }
+			  }
+			}
+		}
 }
 
 footer {
