@@ -51,42 +51,68 @@ class HomeController extends BaseController {
 							->where('payer_id', '=', $my_user_id)
 							->groupBy('username')->get();
 
-						// Payment Balance
-								// Transaction Users
-								$users =  DB::table('users')
-									->join('posts', 'users.id', '=', 'posts.consumer_id')
-									->select('users.id', 'users.username')
-									->orderBy('username')
-									->get();
+						// (dirty code, may faster than change <form> add/edit )
+						// 1. Payment Balance - Get last record
+						$last_transacetion =  DB::table('posts')
+								->join('users', 'posts.consumer_id', '=', 'users.id')
+								->select(
+										'posts.payer_id', 'posts.category_id', 'posts.created_at'
+									)
+								->first();
+						$payer_id = $last_transacetion->payer_id;
+						$last_cid = $last_transacetion->category_id;
+						$last_date = $last_transacetion->created_at;
+						$last_date = new DateTime($last_date);
 
-								$balances = array();
+						// 2. Payment Balance - Get consumer in lasts record
+						$user =  DB::table('posts')
+								->join('users', 'posts.consumer_id', '=', 'users.id')
+								->select('users.id')
+								->where('payer_id', '=', $payer_id)
+								->where('posts.category_id', '=', $last_cid)
+								->where('posts.created_at', '<', 'DATE_SUB('.$last_date->getTimestamp().', INTERVAL 6 HOUR)')
+								->orderBy('username')
+								->get();
 
-								foreach($users as $key=>$val) {
-										$uid = $val->id;
-										$result =  DB::table('posts')
-												->join('users', 'posts.consumer_id', '=', 'users.id')
+						// 3. Payment Blance - Total cost in this restaurant
+						$cost =  DB::table('posts')
+							->join('users', 'posts.consumer_id', '=', 'users.id')
+							->select(DB::raw('sum(cost) AS total'))
+							->where('payer_id', '=', $payer_id)
+							->where('posts.category_id', '=', $last_cid)
+							->where('posts.created_at', '<', 'DATE_SUB('.$last_date->getTimestamp().', INTERVAL 6 HOUR)')
+							->get();
+						$total = $cost[0]->total;
 
-												->select(
-													'username',
-														DB::raw('
-																	IFNULL((SELECT sum(cost) FROM posts WHERE payer_id = '.$uid.' AND consumer_id = '.$uid.'), 0) AS credit,
-															IFNULL((SELECT sum(cost) FROM posts WHERE payer_id <> '.$uid.' AND consumer_id = '.$uid.'), 0) AS debet
-														')
-													)
-												->where('users.id', '=', $uid)
-												->get();
+						// 4. Payment Balance - Export
+						function balance($uid, $payer_id, $total) {
+								$str = '';
+								if($uid == $payer_id) {
+										$str .= ' ('.$total.' - (SELECT (cost) FROM posts WHERE payer_id = '.$uid.' AND consumer_id = '.$uid.')) AS credit,';
+										$str .=	' (NULL) AS debet';
+								} else {
+										$str .= ' (SELECT SUM(cost) FROM posts WHERE payer_id = '.$uid.' AND consumer_id = '.$uid.') AS credit,';
+										$str .=	' (SELECT SUM(cost) FROM posts WHERE payer_id = '.$payer_id.' AND consumer_id = '.$uid.') AS debet';
+								}
+								return $str;
+						}
+						foreach($user as $key=>$val) {
+							$uid = $val->id;
 
-												$balances[] = $result;
-									}
-										// vd($balances);
-
-
-
-
-							// $balances = DB::table('posts')
-							// ->join('users', 'posts.consumer_id', '=', 'users.id')
-							// ->select('username', DB::raw('sum(cost) AS total'))
-							// ->groupBy('username')->get();
+							$balance =  DB::table('posts')
+								->join('users', 'posts.consumer_id', '=', 'users.id')
+								->select(
+									'username',
+										DB::raw(balance($uid, $payer_id, $total))
+									)
+								->where('payer_id', '=', $payer_id)
+								->where('posts.category_id', '=', $last_cid)
+								->where('posts.created_at', '<', 'DATE_SUB('.$last_date->getTimestamp().', INTERVAL 6 HOUR)')
+								->where('users.id', '=', $uid)
+								->first();
+								$balances[] = $balance;
+						}
+				vd($balances);
 
 							// Payment History
 							function users($cid) {

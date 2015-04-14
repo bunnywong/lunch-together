@@ -61,22 +61,23 @@
 
         @if(Auth::user()->is_admin)
 
-            @if(isset($balances))
+            @if(isset($balances) && $balances != 'NULL')
+
             <div class="well balance">
                 <h4>Latest Balance</h4>
                 <ul>
                     @foreach ($balances as $balance)
-                        @foreach ($balance as $val)
-                            <li class="capitalize">
-                                {{$val->username}}
+                        @if($balance != NULL)
+                        <li class="capitalize">
+                            {{$balance->username}}
 
-                                @if($val->debet > $val->credit)
-                                    - ${{$val->debet}}
-                                @else
-                                    {{$val->credit}}
-                                @endif
-                            </li>
-                        @endforeach
+                            @if($balance->debet > $balance->credit)
+                                - ${{$balance->debet}}
+                            @else
+                                ${{$balance->credit}}
+                            @endif
+                        @endif
+                        </li>
                     @endforeach
                 </ul>
             </div>

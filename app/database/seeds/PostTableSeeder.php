@@ -43,8 +43,8 @@ class PostTableSeeder extends Seeder {
                 'created_at'  => \Carbon\Carbon::now()->addDays(-1),
                 'updated_at'  => \Carbon\Carbon::now()->addDays(0),
             ]);
-        /* Scenario #3.2 Payment
-        -------------------------------------------------- */
+
+        // Scenario #3.2 Payment
         Post::create([
                 'content'     => 'Scenario #1 Payment - Charlie pay for self',
                 'event_date' => \Carbon\Carbon::now()->addDays(0),
@@ -76,8 +76,7 @@ class PostTableSeeder extends Seeder {
                 'updated_at'  => \Carbon\Carbon::now()->addDays(0),
             ]);
 
-        /* Scenario #3.23 Payment
-        -------------------------------------------------- */
+        // Scenario #3.23 Payment
         Post::create([
                 'content'     => 'Scenario #1 Payment - Charlie pay for self',
                 'event_date' => \Carbon\Carbon::now()->addDays(0),
@@ -108,7 +107,6 @@ class PostTableSeeder extends Seeder {
                 'created_at'  => \Carbon\Carbon::now()->addDays(-1),
                 'updated_at'  => \Carbon\Carbon::now()->addDays(0),
             ]);
-
 	}
 
 }
