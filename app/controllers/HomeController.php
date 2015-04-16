@@ -25,10 +25,10 @@ class HomeController extends BaseController {
 				$my_company =  $my_company->my_company;
 */
 
-        $posts      = Post::select('*')
-        ->join('users', 'posts.payer_id', '=', 'users.id')
+        $posts = Post::orderBy('created_at', 'desc')->paginate(5);
+        // ->join('users', 'posts.payer_id', '=', 'users.id')
         // ->where(DB::raw('right(users.email, length(users.email)-INSTR(users.email, \'@\'))'), '=', $my_company)
-        ->orderBy('posts.created_at', 'desc')->paginate(5);
+// vd($posts);
 
         $categories = Category::all();
 
