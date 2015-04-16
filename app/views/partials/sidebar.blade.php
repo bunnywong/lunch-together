@@ -67,17 +67,27 @@
                 <h4>Latest Balance</h4>
                 <ul>
                     @foreach ($balances as $balance)
-                        @if($balance != NULL)
-                        <li class="capitalize">
-                            {{$balance->username}}
 
+                        @if($balance == NULL)
+
+                        @endif
+
+                        @if($balance != NULL)
                             @if($balance->debet > $balance->credit)
-                                - ${{$balance->debet}}
+                                <li class="capitalize">
+                                    {{$balance->username}}
+                                    - ${{$balance->debet}}
+                                 </li>
                             @else
-                                ${{$balance->credit}}
+                                @if($balance->credit != $balance->debet)
+                                    <li class="capitalize">
+                                        {{$balance->username}}
+                                        ${{$balance->credit - $balance->debet}}
+                                    </li>
+                                @endif
                             @endif
                         @endif
-                        </li>
+
                     @endforeach
                 </ul>
             </div>

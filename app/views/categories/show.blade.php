@@ -20,7 +20,7 @@ Lunch Together @parent
     <h2>
     </h2>
     <p class="text-right">
-        <span class="glyphicon glyphicon-time"></span> {{{ $post->created_at->toDateTimeString() }}}
+        <span class="glyphicon glyphicon-time" title="create date"></span> {{{ $post->created_at->toDateTimeString() }}}
     </p>
     <p>${{{ $post->cost }}} - {{{ $post->category->name }}}</p>
     <p>{{{ $post->content }}}</p>

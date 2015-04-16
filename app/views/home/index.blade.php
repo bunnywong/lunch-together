@@ -27,7 +27,7 @@ Lunch Together  @parent
             <a href="{{ route('posts.show', $post->id) }}">{{{ $post->category->name }}}</a>
         </h2>
         <p class="text-right">
-            <span class="glyphicon glyphicon-time"></span>
+            <span class="glyphicon glyphicon-time" title="create date"></span>
             {{{ $post->created_at->toDateTimeString() }}}
         </p>
         <p>${{{ $post->cost }}} - {{{ $post->content }}}</p>

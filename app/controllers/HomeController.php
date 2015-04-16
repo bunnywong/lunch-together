@@ -28,7 +28,7 @@ class HomeController extends BaseController {
         $posts      = Post::select('*')
         ->join('users', 'posts.payer_id', '=', 'users.id')
         // ->where(DB::raw('right(users.email, length(users.email)-INSTR(users.email, \'@\'))'), '=', $my_company)
-        ->orderBy('posts.created_at', 'asc')->paginate(5);
+        ->orderBy('posts.created_at', 'desc')->paginate(5);
 
         $categories = Category::all();
 
@@ -56,43 +56,45 @@ class HomeController extends BaseController {
 						$last_transacetion =  DB::table('posts')
 								->join('users', 'posts.consumer_id', '=', 'users.id')
 								->select(
-										'posts.payer_id', 'posts.category_id', 'posts.created_at'
+										'posts.payer_id', 'posts.category_id', 'posts.event_date'
 									)
+								->orderBy('posts.created_at', 'desc')
 								->first();
+
 						$payer_id = $last_transacetion->payer_id;
 						$last_cid = $last_transacetion->category_id;
-						$last_date = $last_transacetion->created_at;
-						$last_date = new DateTime($last_date);
-
+						$event_date = $last_transacetion->event_date;
+						$event_date = str_limit($event_date, 10, '').'%';
+// vd($last_transacetion);
 						// 2. Payment Balance - Get consumer in lasts record
 						$user =  DB::table('posts')
 								->join('users', 'posts.consumer_id', '=', 'users.id')
 								->select('users.id')
 								->where('payer_id', '=', $payer_id)
 								->where('posts.category_id', '=', $last_cid)
-								->where('posts.created_at', '<', 'DATE_SUB('.$last_date->getTimestamp().', INTERVAL 6 HOUR)')
+								// ->where('posts.event_date', 'LIKE', $event_date)
 								->orderBy('username')
 								->get();
-
+// vd($user);
 						// 3. Payment Blance - Total cost in this restaurant
 						$cost =  DB::table('posts')
 							->join('users', 'posts.consumer_id', '=', 'users.id')
 							->select(DB::raw('sum(cost) AS total'))
 							->where('payer_id', '=', $payer_id)
 							->where('posts.category_id', '=', $last_cid)
-							->where('posts.created_at', '<', 'DATE_SUB('.$last_date->getTimestamp().', INTERVAL 6 HOUR)')
+							->where('posts.event_date', 'LIKE', $event_date)
 							->get();
 						$total = $cost[0]->total;
-
+// vd($total);
 						// 4. Payment Balance - Export
 						function balance($uid, $payer_id, $total) {
 								$str = '';
 								if($uid == $payer_id) {
-										$str .= ' ('.$total.' - (SELECT (cost) FROM posts WHERE payer_id = '.$uid.' AND consumer_id = '.$uid.')) AS credit,';
-										$str .=	' (NULL) AS debet';
+										$str .= ' ('.$total.' - (SELECT SUM(cost) FROM posts WHERE payer_id = '.$uid.' AND consumer_id = '.$uid.')) AS credit,';
+										$str .=	' (0) AS debet';
 								} else {
-										$str .= ' (SELECT SUM(cost) FROM posts WHERE payer_id = '.$uid.' AND consumer_id = '.$uid.') AS credit,';
-										$str .=	' (SELECT SUM(cost) FROM posts WHERE payer_id = '.$payer_id.' AND consumer_id = '.$uid.') AS debet';
+										$str .= ' IFNULL((SELECT SUM(cost) FROM posts WHERE payer_id = '.$uid.' AND consumer_id = '.$uid.'), 0) AS credit,';
+										$str .=	' IFNULL((SELECT SUM(cost) FROM posts WHERE payer_id = '.$payer_id.' AND consumer_id = '.$uid.'), 0) AS debet';
 								}
 								return $str;
 						}
@@ -107,12 +109,12 @@ class HomeController extends BaseController {
 									)
 								->where('payer_id', '=', $payer_id)
 								->where('posts.category_id', '=', $last_cid)
-								->where('posts.created_at', '<', 'DATE_SUB('.$last_date->getTimestamp().', INTERVAL 6 HOUR)')
+								->where('posts.event_date', 'LIKE', $event_date)
 								->where('users.id', '=', $uid)
 								->first();
 								$balances[] = $balance;
 						}
-				vd($balances);
+// vd($balances);
 
 							// Payment History
 							function users($cid) {
